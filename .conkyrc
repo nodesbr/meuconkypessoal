@@ -1,0 +1,186 @@
+--[[
+---#========================================================================
+---#    Conky-Gnu/Linux                                                    =
+---#    Author: NodesBr2022                                                =
+---#    Editado/Atualizado por: NodesBR2018 (a 2022)                       =
+---#    telephone: 00 0 0000-0000                                          =
+---#    own_window_type = 'normal',                                       =
+---#========================================================================
+]]
+
+conky.config = {
+    alignment = 'top_right',
+
+    background = false,
+    border_width = 1,
+    cpu_avg_samples = 1,
+
+    double_buffer = true,
+text_buffer_size = 2048,
+
+    draw_borders = false,
+    draw_graph_borders = true,
+    draw_outline = false,
+    draw_shades = false,
+
+    extra_newline = false,
+    font = 'DejaVu Sans Mono:size=12',
+
+    gap_x = 11,
+    gap_y = 20,
+
+minimum_size = 350,
+maximum_width = 320,
+
+    net_avg_samples = 2,
+    no_buffers = true,
+
+    own_window = true,
+    own_window_type = 'desktop',
+    own_window_transparent = true,
+    own_window_argb_visual = true,
+    own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+
+border_inner_margin = 0,
+border_outer_margin = 5,
+
+own_window_argb_value = 255,
+own_window_class = 'Conky-semi',
+
+    show_graph_range = false,
+    show_graph_scale = false,
+    stippled_borders = 0,
+    update_interval = 1.0,
+    uppercase = false,
+    use_spacer = 'none',
+    use_xft = true,
+
+    default_color = 'Olivedrab3',
+    default_outline_color = 'Olivedrab3',
+    default_shade_color = 'black',
+
+override_utf8_locale = true,
+xftfont = 'caviar dreams:size=10',
+xftalpha = 0.5,
+
+color0 = 'Royalblue3',
+color1 = 'Grey',
+color2 = 'Olivedrab3',
+color3 = 'Yellow',
+color4 = 'Orange',
+color5 = 'DDDDDD',
+color6 = 'AAAAAA',
+color7 = '888888',
+color8 = '666666',
+color9 = 'FF4500',
+
+template0 = 'wlx90de80478bf9',
+template1 = 'wlan0',
+template2 = 'enp6s0',
+template3 = 'eth0',
+
+}
+
+conky.text = [[
+${color0} ${hr 3}
+
+${alignc}${color orange}${font :Bold:size=16}${exec  cat /etc/issue.net}${font}
+#
+#================================================
+${font :Bold:size=08}${color}${alignc}$sysname $kernel - ${if_match "${machine}" == "i686"}32${else}64${endif}-Bits${font}
+## para funcionar instale o nvidia-settings
+${if_existing /usr/bin/nvidia-smi}${font Ubuntu:bold:size=9}${alignc}${color5} ${exec nvidia-smi --query-gpu=gpu_name --format=csv,noheader,nounits}${endif} ${if_existing /usr/bin/nvidia-settings}  ${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t} °C${endif}${font}
+#==== PLACAS NVIDIA =============================
+#${if_existing /usr/bin/nvidia-settings}${font :Bold:size=10}Temp. NVIDIA:${color1}  ${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t} °C${endif}${font}
+# ----------------------------------------------------------------------------------------------------------------######
+#==== OUTROS ITENS PARA USAR DA NVIDIA===#
+#${font :Bold:size=10}GPU:${color1}  ${execi 60 nvidia-settings -query [gpu:0]/GPUCoreTemp -t} °C${font}
+#${font :Bold:size=10}VRAM Utilization:${color1}  ${exec nvidia-smi | grep % | cut -c 37-40} MB${font}
+#${font :Bold:size=10}GPU Power Draw:${color1}  ${exec nvidia-smi | grep % | cut -c 21-23} W${font}
+${font :Bold:size=8}${color9}PROCESSADORES $hr:
+
+${font :Bold:size=18}${color9}CPU: ${color1}${exec sensors|grep 'Core 0'|awk '{print $3}'}${font :Bold:size=8} ${color1}${exec sensors|grep 'Core 0'|awk '{print $9}'}${font}
+#${font :Bold:size=14}${color2}Nvidia ${color6}105: ${color1}${exec sensors|grep 'temp'|awk '{print $2}'}${font}${voffset -20}
+#
+${font Ubuntu:bold:size=8}${alignc}${color5}${exec cat /proc/cpuinfo | grep "model name" -m1 | cut -d":" -f2 | cut -d" " -f2- | sed 's#Processor ##'}${color}${font}
+#
+#---- GERAL 0 ----------------------------------#
+${if_existing /sys/devices/system/cpu/cpu0}${color}${font :Bold:size=10}CPU0: ${color0}${cpubar 16}${color1}${endif}
+#--- CPUGRAPH ATUAL-- ----------------------------#
+${if_existing /sys/devices/system/cpu/cpu0}${color orange}${cpugraph 30,0 7fff00 ff0000 -t}${endif}
+#--- CPUBAR ATUAL-- ----------------------------#
+#=========CPU 1 a 4=============================#
+${if_existing /sys/devices/system/cpu/cpu0}${color}${font :Bold:size=10}01: ${color0}${cpubar cpu0 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu1}${color1}${font :Bold:size=10}02: ${color7}${cpubar cpu1 16}${color} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu2}${color}${font :Bold:size=10}03: ${color0}${cpubar cpu2 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu3}${color1}${font :Bold:size=10}04: ${color7}${cpubar cpu3 16} ${color1} ${endif}${voffset 1}
+#=============5 A 8==================================#
+${if_existing /sys/devices/system/cpu/cpu4}${color}${font :Bold:size=10}05: ${color0}${cpubar cpu4 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu5}${color1}${font :Bold:size=10}06: ${color7}${cpubar cpu5 16}${color} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu6}${color}${font :Bold:size=10}07: ${color0}${cpubar cpu6 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu7}${color1}${font :Bold:size=10}08: ${color7}${cpubar cpu7 16} ${color1} ${endif}${voffset -3}
+${if_existing /sys/devices/system/cpu/cpu8}${color}${font :Bold:size=10}09: ${color0}${cpubar cpu8 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu9}${color1}${font :Bold:size=10}10: ${color7}${cpubar cpu9 16} ${color1} ${endif}${voffset -3}
+${if_existing /sys/devices/system/cpu/cpu10}${color}${font :Bold:size=10}11: ${color0}${cpubar cpu10 16} ${color1} ${endif}${voffset 1}
+${if_existing /sys/devices/system/cpu/cpu11}${color1}${font :Bold:size=10}12: ${color7}${cpubar cpu11 16} ${color1} ${endif}${voffset -3}
+#=============9 E 10==================================#
+#===============================================#
+#${font :Bold:size=10}${color1}${alignc}${top name 1}${top name 2}${voffset 7}
+#====MAIS USADOS =================================
+#${color7}${top name 2}${alignr 65}${top cpu 2}  ${alignr}${top mem 2}
+#${color8}${top name 3}${alignr 65}${top cpu 3}  ${alignr}${top mem 3}
+#${color8}${top name 4}${alignr 65}${top cpu 4}  ${alignr}${top mem 4}
+#===============================================#
+${color orange}${font :Bold:size=8}MEMÓRIAS: (${cached}) ${color9}$hr:
+${color}RAM ${alignr}${color1}$mem / $memmax ($memperc%)
+${color0}${membar 30}
+${color}SWAP  ${color0}${swapbar 8,140} ${alignr}${color1}$swap / $swapmax ($swapperc%)
+#
+#${font :Bold:size=9}${color orange}AMD/RADEON: ${color9}$hr:${color}
+#==== PLACAS AMD/RADEON =========================
+#${font :Bold:size=8}TEMP:${color1}  ${execi 4 sensors | grep -v "(crit = +106.0°C)" | grep -m 2 'temp1' | cut -c15-17}°C / +120.0°C${font}
+#${font :Bold:size=10}${color1}GPUuso: ${execi 5 radeontop -d- -l1 | grep -o 'gpu [0-9]\{1,3\}' | cut -c 5-10}% ${color1}${alignr 50}VRAMuso:${execi 5 radeontop -d- -l1 | grep -o 'vram [0-9]\{1,3\}' | cut -c 5-10}%
+#${voffset -5}${color5}${execgraph "radeontop -d- -l1 | grep -o 'gpu [0-9]\{1,3\}' | cut -c 5-10" 20,158 66241C 0099CC}${color5}${execgraph "radeontop -d- -l1 | grep -o 'vram [0-9]\{1,3\}' | cut -c 5-10" 20,159 66241C 0099CC} ${voffset -15}
+
+${font :Bold:size=8}${color orange}DISCOS LOCAIS: ${color9}$hr:${color}
+################ SISTEMA /ROOT
+${color1}Root: ${color1}(${fs_type})${alignr}${color5}${fs_size /}>${color6}${fs_used /} ${color0}${alignr}${fs_bar 8,75} ${color7}(${fs_used_perc /}%)
+#${color1}NTFS: ${color1}(${fs_type /media/Documentos03})${alignr}${color5}${fs_size /media/Documentos03}>${color6}${fs_used /media/Documentos03} ${color0}${alignr}${fs_bar 8,75 /media/Documentos03} ${color7}(${fs_used_perc /media/Documentos03}%)
+#
+################### USUARIO /HOME
+${color1}Home: ${color1}(${fs_type /home})${alignr}${color5}${fs_size /home}>${color6}${fs_used /home} ${color0}${alignr}${fs_bar 8,75 /home} ${color7}(${fs_used_perc /home}%)
+#
+${color3}HDD Read-> ${alignc}${color2}${diskio_read}/s ${alignr}${color3}${diskio_write}/s ${color7}<-HDD Write
+${color1}${diskiograph_read 20,158 7fff00 ff0000 -t} ${alignr}${color1}${diskiograph_write 20,158 7fff00 ff0000 -t}$color
+#### LIXEIRA E CACHE DO SISTEMA
+${color2}${color}${color gold}Cache: 0${execi 60 find /var/cache/apt/archives -type f | wc -l} ${alignr 5} Lixeira: 0${execi 60 find ~/.local/share/Trash/files -type f | wc -l}${color}
+#
+#======BATERIA DE NOTEBOOK=======================
+#${color9}Battery Status $hr
+#${color1}${alignr} ${battery BAT0} $alignr
+#${color0}${battery_bar BAT0}
+#
+
+#================================================
+${color orange}(${gw_iface})${color red} - ${addr $template0}${color} $hr:
+
+###############################################
+############## WIFI E REDE LOCAL ##############
+#######= WIRELESS =############################
+${if_up $template0}${color4}${wireless_essid $template0}: ${color1}${wireless_link_qual $template0}% ${color5}${alignr}${wireless_link_bar 7,180 $template0}${color}
+Upload:   ${upspeed $template0}${goto 205}${downspeed $template0} ${alignr}:Download
+Enviado:   ${totalup $template0}${goto 205}${totaldown $template0} ${alignr}:Recebido
+${upspeedgraph $template0 30,155 7fff00 ff0000 -t}${alignr}${downspeedgraph $template0 30,155 7fff00 ff0000 -t}
+#
+###############################################
+##############    REDE LOCAL     ##############
+################== $template2 ==#####################
+#${else}${if_up $template2}Rede Local :${alignr}${color red}${addr $template2}${color}
+#Upload:   ${upspeed $template2}${goto 205}${downspeed $template2} ${alignr}:Download
+#Enviado:   ${totalup $template2}${goto 205}${totaldown $template2} ${alignr}:Recebido
+#${upspeedgraph $template2 30,155 7fff00 ff0000 -t}${alignr}${downspeedgraph $template2 30,155 7fff00 ff0000 -t}
+#================================================
+${color0}${hr 3}
+${color #dddddd}${font Ani:Bold:pixelsize=40}${alignc}${time %Hh%M}${font}
+${color0}${hr 3}${color2}${font :size=11}
+]]
