@@ -7,17 +7,22 @@ Conky pessoal de minha distribuição linux.
 
 
 # Como usar?
-Baixe e salve na sua home de usuário.
-Mas salve o arquivo que já está lá, caso queira voltar ao estava antes.
+**1º **Instale o pacote do conky no seu sistema com o comando abaixo:<p>
+sudo apt install conky-all
+
+**Depois:**<p>
+Baixe e salve na sua home de usuário.<p>
+Mas salve o arquivo que já está lá, caso queira voltar ao estava antes.<p>
 
 # Observação:
-Para que a rede funcione normalmente, modifique o comando abaixo no arquivo que baixo.
-
-template0 = '**wlx90de80478bf9**',
-template1 = 'wlan0',
-template2 = 'enp6s0',
-template3 = 'eth0',
+Para que a rede funcione normalmente, modifique o comando abaixo no arquivo que baixo.<p>
+<p>
+template0 = '**wlx90de80478bf9**',<p>
+template1 = 'wlan0',<p>
+template2 = 'enp6s0',<p>
+template3 = 'eth0',<p>
+<p></p>
 
 # Permissões de uso:
-Fique à vontade em usar e compartilhar. 
+Fique à vontade em usar e compartilhar. <p>
 Mas, se puder fazer a gentileza de por os créditos noutro arquivo que for compartilhar tendo por base este aqui, ficarei eternamente grato.
